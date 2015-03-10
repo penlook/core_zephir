@@ -30,6 +30,7 @@ parse(0)
 
 from os import *
 
+system('zephir fullclean')
 system('rm -rf ./build')
 system('mkdir build')
 

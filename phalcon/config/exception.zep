@@ -19,13 +19,15 @@
 
 namespace Phalcon\Config;
 
+use Phalcon\Exception as Phalcon_Exception;
+
 /**
  * Phalcon\Config\Exception
  *
  * Exceptions thrown in Phalcon\Config will use this class
  *
  */
-class Exception extends \Phalcon\Exception
+class Exception extends Phalcon_Exception
 {
 
 }

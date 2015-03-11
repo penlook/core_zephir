@@ -16,30 +16,51 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Mvc\View\Engine;
 
-use Phalcon\Test;
+use Phalcon\Mvc\View\Engine;
+use Phalcon\Mvc\View\EngineInterface;
 
 /**
- * Phalcon\Events\EventsAwareInterface
+ * Phalcon\Mvc\View\Engine\Php
  *
- * This interface must for those classes that accept an EventsManager and dispatch events
+ * Adapter to use PHP itself as templating engine
  */
-interface EventsAwareInterface
+class Php extends Engine implements EngineInterface
 {
 
 	/**
-	 * Sets the events manager
+	 * Renders a view using the template engine
 	 *
-	 * @param Phalcon\Events\ManagerInterface eventsManager
+	 * @param string path
+	 * @param array params
+	 * @param boolean mustClean
 	 */
-	public function setEventsManager(<ManagerInterface> eventsManager);
+	public function render(string! path, params, boolean mustClean = false)
+	{
+		var key, value;
 
-	/**
-	 * Returns the internal event manager
-	 *
-	 * @return Phalcon\Events\ManagerInterface
-	 */
-	public function getEventsManager();
+		if mustClean === true {
+			ob_clean();
+		}
+
+		/**
+		 * Create the variables in local symbol table
+		 */
+		if typeof params == "array" {
+			for key, value in params {
+				let {key} = value;
+			}
+		}
+
+		/**
+		 * Require the file
+		 */
+		require path;
+
+		if mustClean === true {
+			this->_view->setContent(ob_get_contents());
+		}
+	}
 
 }

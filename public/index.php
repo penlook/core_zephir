@@ -30,7 +30,7 @@
  *     Viet Nguyen      <vietna@penlook.com>
  *
  */
-namespace App;
+namespace Phalcon\App;
 
 $app = new App();
 

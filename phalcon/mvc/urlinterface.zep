@@ -16,57 +16,60 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Mvc;
 
 /**
- * Phalcon\Events\Manager
+ * Phalcon\Mvc\UrlInterface
  *
- * Phalcon Events Manager, offers an easy way to intercept and manipulate, if needed,
- * the normal flow of operation. With the EventsManager the developer can create hooks or
- * plugins that will offer monitoring of data, manipulation, conditional execution and much more.
+ * Interface for Phalcon\Mvc\UrlInterface
  */
-interface ManagerInterface
+interface UrlInterface
 {
 
 	/**
-	 * Attach a listener to the events manager
+	 * Sets a prefix to all the urls generated
 	 *
-	 * @param string eventType
-	 * @param object|callable handler
+	 * @param string baseUri
 	 */
-	public function attach(eventType, handler);
+	public function setBaseUri(baseUri);
 
 	/**
-	 * Detach the listener from the events manager
+	 * Returns the prefix for all the generated urls. By default /
 	 *
-	 * @param string eventType
-	 * @param object handler
+	 * @return string
 	 */
-	public function detach(eventType, handler);
+	public function getBaseUri();
 
 	/**
-	 * Removes all events from the EventsManager
+	 * Sets a base paths for all the generated paths
 	 *
-	 * @param string type
+	 * @param string basePath
 	 */
-	public function detachAll(type=null);
+	public function setBasePath(basePath);
 
 	/**
-	 * Fires a event in the events manager causing that the acive listeners will be notified about it
+	 * Returns a base path
 	 *
-	 * @param string eventType
-	 * @param object source
-	 * @param mixed  data
-	 * @return mixed
+	 * @return string
 	 */
-	public function fire(eventType, source, data=null);
+	public function getBasePath();
 
 	/**
-	 * Returns all the attached listeners of a certain type
+	 * Generates a URL
 	 *
-	 * @param string type
-	 * @return array
+	 * @param string|array uri
+	 * @param array|object args Optional arguments to be appended to the query string
+	 * @param bool $local
+	 * @return string
 	 */
-	public function getListeners(type);
+	public function get(uri=null, args=null, boolean local=null);
+
+	/**
+	 * Generates a local path
+	 *
+	 * @param string path
+	 * @return string
+	 */
+	public function path(path=null);
 
 }

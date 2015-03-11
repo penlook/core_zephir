@@ -16,57 +16,64 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Mvc\View;
+
+use Phalcon\DiInterface;
+use Phalcon\Di\Injectable;
+use Phalcon\Mvc\ViewInterface;
 
 /**
- * Phalcon\Events\Manager
+ * Phalcon\Mvc\View\Engine
  *
- * Phalcon Events Manager, offers an easy way to intercept and manipulate, if needed,
- * the normal flow of operation. With the EventsManager the developer can create hooks or
- * plugins that will offer monitoring of data, manipulation, conditional execution and much more.
+ * All the template engine adapters must inherit this class. This provides
+ * basic interfacing between the engine and the Phalcon\Mvc\View component.
  */
-interface ManagerInterface
+abstract class Engine extends Injectable
 {
 
-	/**
-	 * Attach a listener to the events manager
-	 *
-	 * @param string eventType
-	 * @param object|callable handler
-	 */
-	public function attach(eventType, handler);
+	protected _view;
 
 	/**
-	 * Detach the listener from the events manager
+	 * Phalcon\Mvc\View\Engine constructor
 	 *
-	 * @param string eventType
-	 * @param object handler
+	 * @param Phalcon\Mvc\ViewInterface view
+	 * @param Phalcon\DiInterface dependencyInjector
 	 */
-	public function detach(eventType, handler);
+	public function __construct(view, <DiInterface> dependencyInjector = null)
+	{
+		let this->_view = view;
+		let this->_dependencyInjector = dependencyInjector;
+	}
 
 	/**
-	 * Removes all events from the EventsManager
+	 * Returns cached ouput on another view stage
 	 *
-	 * @param string type
+	 * @return string
 	 */
-	public function detachAll(type=null);
+	public function getContent() -> string
+	{
+		return this->_view->getContent();
+	}
 
 	/**
-	 * Fires a event in the events manager causing that the acive listeners will be notified about it
+	 * Renders a partial inside another view
 	 *
-	 * @param string eventType
-	 * @param object source
-	 * @param mixed  data
-	 * @return mixed
+	 * @param string partialPath
+	 * @param array params
+	 * @return string
 	 */
-	public function fire(eventType, source, data=null);
+	public function partial(string! partialPath, params = null) -> string
+	{
+		return this->_view->partial(partialPath, params);
+	}
 
 	/**
-	 * Returns all the attached listeners of a certain type
+	 * Returns the view component related to the adapter
 	 *
-	 * @param string type
-	 * @return array
+	 * @return Phalcon\Mvc\ViewInterface
 	 */
-	public function getListeners(type);
-
+	public function getView() -> <ViewInterface>
+	{
+		return this->_view;
+	}
 }

@@ -14,59 +14,77 @@
  | Authors: Andres Gutierrez <andres@phalconphp.com>                      |
  |          Eduar Carvajal <eduar@phalconphp.com>                         |
  +------------------------------------------------------------------------+
- */
+*/
 
-namespace Phalcon\Events;
+namespace Phalcon\Di;
 
 /**
- * Phalcon\Events\Manager
+ * Phalcon\Di\ServiceInterface
  *
- * Phalcon Events Manager, offers an easy way to intercept and manipulate, if needed,
- * the normal flow of operation. With the EventsManager the developer can create hooks or
- * plugins that will offer monitoring of data, manipulation, conditional execution and much more.
+ * Represents a service in the services container
  */
-interface ManagerInterface
+interface ServiceInterface
 {
 
 	/**
-	 * Attach a listener to the events manager
+	 * Phalcon\Di\ServiceInterface
 	 *
-	 * @param string eventType
-	 * @param object|callable handler
+	 * @param string name
+	 * @param mixed definition
+	 * @param boolean shared
 	 */
-	public function attach(eventType, handler);
+	public function __construct(string name, definition, boolean shared=false);
 
 	/**
-	 * Detach the listener from the events manager
+	 * Returns the service's name
 	 *
-	 * @param string eventType
-	 * @param object handler
+	 * @param string
 	 */
-	public function detach(eventType, handler);
+	public function getName();
 
 	/**
-	 * Removes all events from the EventsManager
+	 * Sets if the service is shared or not
 	 *
-	 * @param string type
+	 * @param boolean shared
 	 */
-	public function detachAll(type=null);
+	public function setShared(shared);
 
 	/**
-	 * Fires a event in the events manager causing that the acive listeners will be notified about it
+	 * Check whether the service is shared or not
 	 *
-	 * @param string eventType
-	 * @param object source
-	 * @param mixed  data
+	 * @return boolean
+	 */
+	public function isShared();
+
+	/**
+	 * Set the service definition
+	 *
+	 * @param mixed definition
+	 */
+	public function setDefinition(definition);
+
+	/**
+	 * Returns the service definition
+	 *
 	 * @return mixed
 	 */
-	public function fire(eventType, source, data=null);
+	public function getDefinition();
 
 	/**
-	 * Returns all the attached listeners of a certain type
+	 * Resolves the service
 	 *
-	 * @param string type
-	 * @return array
+	 * @param array parameters
+	 * @param Phalcon\DiInterface dependencyInjector
+	 * @return mixed
 	 */
-	public function getListeners(type);
+	public function resolve(parameters=null, <\Phalcon\DiInterface> dependencyInjector=null);
+
+	/**
+	 * Restore the interal state of a service
+	 *
+	 * @param array attributes
+	 * @return Phalcon\Di\ServiceInterface
+	 */
+	public static function __set_state(array! attributes);
 
 }

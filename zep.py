@@ -18,13 +18,17 @@ def parse(index):
 				if os.path.isfile(file_path):
 					files.append(file_path)
 				else:
+					for file in files:
+						print file
+					print "Target file: " + target
 					raise Exception("File not found " + file_path)
 			else:
 				if line.strip().startswith('class'):
 					break
 
 	if len(files) > index + 1:
-		parse(index + 1)
+		if index < 50:
+			parse(index + 1)
 
 parse(0)
 

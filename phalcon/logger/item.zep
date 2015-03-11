@@ -16,57 +16,57 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Logger;
 
 /**
- * Phalcon\Events\Manager
+ * Phalcon\Logger\Item
  *
- * Phalcon Events Manager, offers an easy way to intercept and manipulate, if needed,
- * the normal flow of operation. With the EventsManager the developer can create hooks or
- * plugins that will offer monitoring of data, manipulation, conditional execution and much more.
+ * Represents each item in a logging transaction
+ *
  */
-interface ManagerInterface
+class Item
 {
 
 	/**
-	 * Attach a listener to the events manager
+	 * Log type
 	 *
-	 * @param string eventType
-	 * @param object|callable handler
+	 * @var integer
 	 */
-	public function attach(eventType, handler);
+	protected _type { get };
 
 	/**
-	 * Detach the listener from the events manager
+	 * Log message
 	 *
-	 * @param string eventType
-	 * @param object handler
+	 * @var string
 	 */
-	public function detach(eventType, handler);
+	protected _message { get };
 
 	/**
-	 * Removes all events from the EventsManager
+	 * Log timestamp
 	 *
-	 * @param string type
+	 * @var integer
 	 */
-	public function detachAll(type=null);
+	protected _time { get };
+
+	protected _context { get };
 
 	/**
-	 * Fires a event in the events manager causing that the acive listeners will be notified about it
+	 * Phalcon\Logger\Item constructor
 	 *
-	 * @param string eventType
-	 * @param object source
-	 * @param mixed  data
-	 * @return mixed
+	 * @param string $message
+	 * @param integer $type
+	 * @param integer $time
+	 * @param array $context
 	 */
-	public function fire(eventType, source, data=null);
+	public function __construct(string message, int type, int time = 0, var context = null)
+	{
+		let this->_message = message,
+			this->_type = type,
+			this->_time = time;
 
-	/**
-	 * Returns all the attached listeners of a certain type
-	 *
-	 * @param string type
-	 * @return array
-	 */
-	public function getListeners(type);
+		if typeof context == "array" {
+			let this->_context = context;
+		}
+	}
 
 }

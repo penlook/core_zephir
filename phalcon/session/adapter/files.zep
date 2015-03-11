@@ -16,30 +16,29 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Session\Adapter;
 
-use Phalcon\Test;
+use Phalcon\Session\AdapterInterface;
+use Phalcon\Session\Adapter;
 
 /**
- * Phalcon\Events\EventsAwareInterface
+ * Phalcon\Session\Adapter\Files
  *
- * This interface must for those classes that accept an EventsManager and dispatch events
+ * This adapter store sessions in plain files
+ *
+ *<code>
+ * $session = new \Phalcon\Session\Adapter\Files(array(
+ *    'uniqueId' => 'my-private-app'
+ * ));
+ *
+ * $session->start();
+ *
+ * $session->set('var', 'some-value');
+ *
+ * echo $session->get('var');
+ *</code>
  */
-interface EventsAwareInterface
+class Files extends Adapter implements AdapterInterface
 {
-
-	/**
-	 * Sets the events manager
-	 *
-	 * @param Phalcon\Events\ManagerInterface eventsManager
-	 */
-	public function setEventsManager(<ManagerInterface> eventsManager);
-
-	/**
-	 * Returns the internal event manager
-	 *
-	 * @return Phalcon\Events\ManagerInterface
-	 */
-	public function getEventsManager();
 
 }

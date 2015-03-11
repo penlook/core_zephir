@@ -16,30 +16,14 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
-
-use Phalcon\Test;
+namespace Phalcon\Logger;
 
 /**
- * Phalcon\Events\EventsAwareInterface
+ * Phalcon\Logger\Exception
  *
- * This interface must for those classes that accept an EventsManager and dispatch events
+ * Exceptions thrown in Phalcon\Logger will use this class
  */
-interface EventsAwareInterface
+class Exception extends \Phalcon\Exception
 {
-
-	/**
-	 * Sets the events manager
-	 *
-	 * @param Phalcon\Events\ManagerInterface eventsManager
-	 */
-	public function setEventsManager(<ManagerInterface> eventsManager);
-
-	/**
-	 * Returns the internal event manager
-	 *
-	 * @return Phalcon\Events\ManagerInterface
-	 */
-	public function getEventsManager();
 
 }

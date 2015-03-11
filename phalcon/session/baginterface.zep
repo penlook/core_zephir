@@ -16,57 +16,73 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Session;
 
 /**
- * Phalcon\Events\Manager
+ * Phalcon\Session\BagInterface
  *
- * Phalcon Events Manager, offers an easy way to intercept and manipulate, if needed,
- * the normal flow of operation. With the EventsManager the developer can create hooks or
- * plugins that will offer monitoring of data, manipulation, conditional execution and much more.
+ * Interface for Phalcon\Session\Bag
  */
-interface ManagerInterface
+interface BagInterface
 {
 
 	/**
-	 * Attach a listener to the events manager
-	 *
-	 * @param string eventType
-	 * @param object|callable handler
+	 * Initializes the session bag. This method must not be called directly, the class calls it when its internal data is accesed
 	 */
-	public function attach(eventType, handler);
+	public function initialize();
 
 	/**
-	 * Detach the listener from the events manager
-	 *
-	 * @param string eventType
-	 * @param object handler
+	 * Destroyes the session bag
 	 */
-	public function detach(eventType, handler);
+	public function destroy();
 
 	/**
-	 * Removes all events from the EventsManager
+	 * Setter of values
 	 *
-	 * @param string type
+	 * @param string property
+	 * @param string value
 	 */
-	public function detachAll(type=null);
+	public function set(property, value);
 
 	/**
-	 * Fires a event in the events manager causing that the acive listeners will be notified about it
+	 * Getter of values
 	 *
-	 * @param string eventType
-	 * @param object source
-	 * @param mixed  data
+	 * @param string property
+	 * @param mixed defaultValue
 	 * @return mixed
 	 */
-	public function fire(eventType, source, data=null);
+	public function get(property, defaultValue = null);
 
 	/**
-	 * Returns all the attached listeners of a certain type
+	 * Isset property
 	 *
-	 * @param string type
-	 * @return array
+	 * @param string property
+	 * @return boolean
 	 */
-	public function getListeners(type);
+	public function has(property);
+
+	/**
+	 * Setter of values
+	 *
+	 * @param string property
+	 * @param string value
+	 */
+	public function __set(property, value);
+
+	/**
+	 * Getter of values
+	 *
+	 * @param string property
+	 * @return mixed
+	 */
+	public function __get(property);
+
+	/**
+	 * Isset property
+	 *
+	 * @param string property
+	 * @return boolean
+	 */
+	public function __isset(property);
 
 }

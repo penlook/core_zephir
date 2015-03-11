@@ -16,57 +16,28 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
+namespace Phalcon\Di;
 
 /**
- * Phalcon\Events\Manager
+ * Phalcon\Di\InjectionAwareInterface
  *
- * Phalcon Events Manager, offers an easy way to intercept and manipulate, if needed,
- * the normal flow of operation. With the EventsManager the developer can create hooks or
- * plugins that will offer monitoring of data, manipulation, conditional execution and much more.
+ * This interface must be implemented in those classes that uses internally the Phalcon\Di that creates them
  */
-interface ManagerInterface
+interface InjectionAwareInterface
 {
 
 	/**
-	 * Attach a listener to the events manager
+	 * Sets the dependency injector
 	 *
-	 * @param string eventType
-	 * @param object|callable handler
+	 * @param Phalcon\DiInterface dependencyInjector
 	 */
-	public function attach(eventType, handler);
+	public function setDI(<\Phalcon\DiInterface> dependencyInjector);
 
 	/**
-	 * Detach the listener from the events manager
+	 * Returns the internal dependency injector
 	 *
-	 * @param string eventType
-	 * @param object handler
+	 * @return Phalcon\DiInterface
 	 */
-	public function detach(eventType, handler);
-
-	/**
-	 * Removes all events from the EventsManager
-	 *
-	 * @param string type
-	 */
-	public function detachAll(type=null);
-
-	/**
-	 * Fires a event in the events manager causing that the acive listeners will be notified about it
-	 *
-	 * @param string eventType
-	 * @param object source
-	 * @param mixed  data
-	 * @return mixed
-	 */
-	public function fire(eventType, source, data=null);
-
-	/**
-	 * Returns all the attached listeners of a certain type
-	 *
-	 * @param string type
-	 * @return array
-	 */
-	public function getListeners(type);
+	public function getDI();
 
 }

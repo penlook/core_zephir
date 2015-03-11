@@ -16,30 +16,24 @@
  +------------------------------------------------------------------------+
  */
 
-namespace Phalcon\Events;
-
-use Phalcon\Test;
+namespace Phalcon\Logger;
 
 /**
- * Phalcon\Events\EventsAwareInterface
+ * Phalcon\Logger\FormatterInterface
  *
- * This interface must for those classes that accept an EventsManager and dispatch events
+ * This interface must be implemented by formmaters in Phalcon\Logger
  */
-interface EventsAwareInterface
+interface FormatterInterface
 {
 
 	/**
-	 * Sets the events manager
+	 * Applies a format to a message before sent it to the internal log
 	 *
-	 * @param Phalcon\Events\ManagerInterface eventsManager
+	 * @param string message
+	 * @param int type
+	 * @param int timestamp
+	 * @param array $context
 	 */
-	public function setEventsManager(<ManagerInterface> eventsManager);
-
-	/**
-	 * Returns the internal event manager
-	 *
-	 * @return Phalcon\Events\ManagerInterface
-	 */
-	public function getEventsManager();
+	public function format(string message, int type, int timestamp, var context = null);
 
 }

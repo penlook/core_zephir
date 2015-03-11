@@ -20,6 +20,7 @@ namespace Phalcon\Db\Adapter\Pdo;
 
 use Phalcon\Db\Column;
 use Phalcon\Db\AdapterInterface;
+use Phalcon\Db\Adapter\Pdo;
 
 /**
  * Phalcon\Db\Adapter\Pdo\Mysql
@@ -40,7 +41,7 @@ use Phalcon\Db\AdapterInterface;
  *
  *</code>
  */
-class Mysql extends \Phalcon\Db\Adapter\Pdo implements AdapterInterface
+class Mysql extends Pdo implements AdapterInterface
 {
 
 	protected _type = "mysql";

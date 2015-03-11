@@ -19,6 +19,7 @@
 namespace Phalcon\Mvc\Router;
 
 use Phalcon\Mvc\Router\Exception;
+use Phalcon\Mvc\Router\RouteInterface;
 
 /**
  * Phalcon\Mvc\Router\Route

@@ -18,12 +18,14 @@
 
 namespace Phalcon\Mvc\Router;
 
+use Phalcon\Exception as Phalcon_Exception;
+
 /**
  * Phalcon\Mvc\Router\Exception
  *
  * Exceptions thrown in Phalcon\Mvc\Router will use this class
  */
-class Exception extends \Phalcon\Exception
+class Exception extends Phalcon_Exception
 {
 
 }

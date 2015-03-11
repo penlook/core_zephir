@@ -21,8 +21,10 @@ namespace Phalcon\Mvc;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\DiInterface;
 use Phalcon\Mvc\Router\Route;
+use Phalcon\Mvc\RouterInterface;
 use Phalcon\Mvc\Router\Exception;
 use Phalcon\Http\RequestInterface;
+use Phalcon\Mvc\Router\Group;
 
 /**
  * Phalcon\Mvc\Router
@@ -50,7 +52,7 @@ use Phalcon\Http\RequestInterface;
  *</code>
  *
  */
-class Router implements InjectionAwareInterface,RouterInterface
+class Router implements InjectionAwareInterface, RouterInterface
 {
 	protected _dependencyInjector;
 
@@ -97,8 +99,8 @@ class Router implements InjectionAwareInterface,RouterInterface
 	 */
 	public function __construct(boolean defaultRoutes = true)
 	{
-		array routes = [];
-		
+		var routes = [];
+
 		if defaultRoutes {
 
 			// Two routes are added by default to match /:controller/:action and

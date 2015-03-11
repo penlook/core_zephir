@@ -59,7 +59,7 @@ class Flow
 	public static function start(message = "")
 	{
 		if ! App::debug() {
-			let self::flow = null;
+			let self::flow = false;
 			return;
 		}
 

@@ -20,6 +20,7 @@ namespace Phalcon\Db;
 
 use Phalcon\Db;
 use Phalcon\Db\Reference;
+use Phalcon\Db\RawValue;
 use Phalcon\Db\Index;
 use Phalcon\Db\Exception;
 use Phalcon\Events\EventsAwareInterface;
@@ -28,6 +29,7 @@ use Phalcon\Db\DialectInterface;
 use Phalcon\Db\ReferenceInterface;
 use Phalcon\Db\ColumnInterface;
 use Phalcon\Db\AdapterInterface;
+
 
 /**
  * Phalcon\Db\Adapter
@@ -1096,7 +1098,7 @@ abstract class Adapter implements EventsAwareInterface
 
 		let sql = this->_dialect->tableOptions(tableName, schemaName);
 		if sql {
-			return this->fetchAll(sql, \Phalcon\DB::FETCH_ASSOC)[0];
+			return this->fetchAll(sql, Db::FETCH_ASSOC)[0];
 		}
 		return [];
 	}
@@ -1217,9 +1219,9 @@ abstract class Adapter implements EventsAwareInterface
 	 *
 	 * @return Phalcon\Db\RawValue
 	 */
-	public function getDefaultIdValue() -> <\Phalcon\Db\RawValue>
+	public function getDefaultIdValue() -> <RawValue>
 	{
-		return new \Phalcon\Db\RawValue("null");
+		return new RawValue("null");
 	}
 
 	/**

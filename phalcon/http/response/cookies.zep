@@ -18,6 +18,8 @@
 
 namespace Phalcon\Http\Response;
 
+use Phalcon\DiInterface;
+use Phalcon\Http\Cookie;
 use Phalcon\Http\Response\CookiesInterface;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Http\Cookie\Exception;
@@ -44,7 +46,7 @@ class Cookies implements CookiesInterface, InjectionAwareInterface
 	 *
 	 * @param Phalcon\DiInterface dependencyInjector
 	 */
-	public function setDI(<\Phalcon\DiInterface> dependencyInjector)
+	public function setDI(<DiInterface> dependencyInjector)
 	{
 		let this->_dependencyInjector = dependencyInjector;
 	}
@@ -54,7 +56,7 @@ class Cookies implements CookiesInterface, InjectionAwareInterface
 	 *
 	 * @return Phalcon\DiInterface
 	 */
-	public function getDI() -> <\Phalcon\DiInterface>
+	public function getDI() -> <DiInterface>
 	{
 		return this->_dependencyInjector;
 	}
@@ -105,7 +107,7 @@ class Cookies implements CookiesInterface, InjectionAwareInterface
 		 */
 		if !fetch cookie, this->_cookies[name] {
 
-			let cookie = new \Phalcon\Http\Cookie(name, value, expire, path, secure, domain, httpOnly);
+			let cookie = new Cookie(name, value, expire, path, secure, domain, httpOnly);
 
 			/**
 			 * Pass the DI to created cookies
@@ -161,7 +163,7 @@ class Cookies implements CookiesInterface, InjectionAwareInterface
 	 * @param string name
 	 * @return Phalcon\Http\Cookie
 	 */
-	public function get(string! name) -> <\Phalcon\Http\Cookie>
+	public function get(string! name) -> <Cookie>
 	{
 		var dependencyInjector, encryption, cookie;
 
@@ -172,7 +174,7 @@ class Cookies implements CookiesInterface, InjectionAwareInterface
 		/**
          * Create the cookie if the it does not exist
          */
-		let cookie = new \Phalcon\Http\Cookie(name),
+		let cookie = new Cookie(name),
 			dependencyInjector = this->_dependencyInjector;
 
 		if typeof dependencyInjector == "object" {

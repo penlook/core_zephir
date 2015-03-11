@@ -18,6 +18,7 @@
 
 namespace Phalcon\Mvc\Collection;
 
+use Phalcon\Mvc\Collection\Exception;
 use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\Events\EventsAwareInterface;
 use Phalcon\Events\ManagerInterface;

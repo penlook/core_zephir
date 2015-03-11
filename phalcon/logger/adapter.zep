@@ -18,6 +18,7 @@
 
 namespace Phalcon\Logger;
 
+use Phalcon\Logger;
 use Phalcon\Logger\AdapterInterface;
 use Phalcon\Logger\FormatterInterface;
 use Phalcon\Logger\Exception;
@@ -161,7 +162,7 @@ abstract class Adapter
  	 */
 	public function critical(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::CRITICAL, message, context);
+		this->log(Logger::CRITICAL, message, context);
 		return this;
 	}
 	
@@ -174,7 +175,7 @@ abstract class Adapter
  	 */
 	public function emergency(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::EMERGENCY, message, context);
+		this->log(Logger::EMERGENCY, message, context);
 		return this;
 	}
 
@@ -187,7 +188,7 @@ abstract class Adapter
  	 */
 	public function debug(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::DEBUG, message, context);
+		this->log(Logger::DEBUG, message, context);
 		return this;
 	}
 
@@ -200,7 +201,7 @@ abstract class Adapter
  	 */
 	public function error(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::ERROR, message, context);
+		this->log(Logger::ERROR, message, context);
 		return this;
 	}
 
@@ -213,7 +214,7 @@ abstract class Adapter
  	 */
 	public function info(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::INFO, message, context);
+		this->log(Logger::INFO, message, context);
 		return this;
 	}
 
@@ -226,7 +227,7 @@ abstract class Adapter
  	 */
 	public function notice(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::NOTICE, message, context);
+		this->log(Logger::NOTICE, message, context);
 		return this;
 	}
 
@@ -239,7 +240,7 @@ abstract class Adapter
  	 */
 	public function warning(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::WARNING, message, context);
+		this->log(Logger::WARNING, message, context);
 		return this;
 	}
 
@@ -252,7 +253,7 @@ abstract class Adapter
  	 */
 	public function alert(string! message, var context = null) -> <AdapterInterface>
 	{
-		this->log(\Phalcon\Logger::ALERT, message, context);
+		this->log(Logger::ALERT, message, context);
 		return this;
 	}
 
@@ -282,7 +283,7 @@ abstract class Adapter
 		}
 
 		if typeof toggledType == "null" {
-			let toggledType = \Phalcon\Logger::DEBUG;
+			let toggledType = Logger::DEBUG;
 		}
 
 		/**

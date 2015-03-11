@@ -30,6 +30,7 @@
 namespace Phalcon\App;
 
 use Phalcon\Config as Phalcon_Config;
+use Phalcon\App\Service;
 
 /**
  * App Configuration
@@ -77,9 +78,9 @@ class Config
      * Config constructor
      *
      */
-    private function __construct(context = null)
+    private function __construct(context = false)
     {
-        if context != null {
+        if context {
             let this->context = context;
         }
     }
@@ -89,7 +90,7 @@ class Config
      *
      * @return App\Config
      */
-	public static function getInstance(context = null)
+	public static function getInstance(context = false)
     {
 
         if ! self::static_config {
@@ -181,7 +182,6 @@ class Config
 
         return [
             "language"  : "en_US",
-            "hello" : helloc("abc"),
             "app" : this->get("backend.yml", "app"),
             "path" : this->get("backend.yml", "path"),
             "database"  : [

@@ -16,21 +16,26 @@ def parse(index):
 				file_path  = class_path + '.zep'
 
 				if os.path.isfile(file_path):
-					files.append(file_path)
+					if not file_path in files:
+						files.append(file_path)
 				else:
 					for file in files:
 						print file
 					print "Target file: " + target
 					raise Exception("File not found " + file_path)
 			else:
-				if line.strip().startswith('class'):
+				if line.strip().startswith('{'):
 					break
 
 	if len(files) > index + 1:
-		if index < 50:
-			parse(index + 1)
+		parse(index + 1)
 
 parse(0)
+
+print "TOTAL ", files.__len__()
+#for file in files:
+#	print file
+#exit(0)
 
 from os import *
 
@@ -47,5 +52,6 @@ for file in files:
 	system(cmd)
 
 system('cp -rf ./ext ./build/ext')
+system('cp -rf ./phpc ./build/phpc')
 system('cp -rf ./config.json ./build/config.json')
 system('cd build && zephir builddev')

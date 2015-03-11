@@ -20,6 +20,7 @@
 namespace Phalcon\Logger\Adapter;
 
 use Phalcon\Logger\Adapter;
+use Phalcon\Logger\Formatter\Line;
 use Phalcon\Logger\AdapterInterface;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\FormatterInterface;
@@ -100,7 +101,7 @@ class File extends Adapter implements AdapterInterface
 	public function getFormatter() -> <FormatterInterface>
 	{
 		if typeof this->_formatter !== "object" {
-			let this->_formatter = new \Phalcon\Logger\Formatter\Line();
+			let this->_formatter = new Line();
 		}
 
 		return this->_formatter;

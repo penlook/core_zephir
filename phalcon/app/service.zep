@@ -30,6 +30,7 @@
 namespace Phalcon\App;
 
 use Phalcon\Mvc\View;
+use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
@@ -41,7 +42,7 @@ use Phalcon\Mvc\Collection\Manager as CollectionManager;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\App\Router;
 use Phalcon\Http\Response\Cookies;
-use Phalcon\Crypt;
+//use Phalcon\Crypt;
 
 /**
  * App Service
@@ -158,10 +159,10 @@ class Service
         var view;
         let view = new View();
 
-        view->setViewsDir(self::getConfig()->context->template)
+        view->setViewsDir(self::getConfig()->{"context"}->{"template"})
             ->registerEngines([
                 ".volt" : function(view, service) {
-                    return Service::getVolt(view, service);
+                    return \Phalcon\App\Service::getVolt(view, service);
                 }
             ]);
 
@@ -181,11 +182,10 @@ class Service
         }
 
         var volt;
-        let volt = null;
-        //new VoltEngine(view, di);
+        let volt = new Volt(view, di);
 
         volt->setOptions([
-                "compiledPath" : self::getConfig()->path->cache,
+                "compiledPath" : self::getConfig()->{"path"}->{"cache"},
                 "compiledSeparator" : "_",
                 "compileAlways" : true
             ]);
@@ -203,14 +203,14 @@ class Service
      */
     public static function setCompiler(compiler)
     {
-        compiler->addFilter("trans",   "\\App\\View::trans");
-        compiler->addFilter("site",    "\\App\\View::site");
-        compiler->addFilter("json",    "\\App\\View::json");
-        compiler->addFilter("img",     "\\App\\View::img");
-        compiler->addFilter("css",     "\\App\\View::css");
-        compiler->addFilter("js",      "\\App\\View::js");
-        compiler->addFilter("less",    "\\App\\View::less");
-        compiler->addFilter("coffee",  "\\App\\View::coffee");
+        //compiler->addFilter("trans",   "\\App\\View::trans");
+        //compiler->addFilter("site",    "\\App\\View::site");
+        //compiler->addFilter("json",    "\\App\\View::json");
+        //compiler->addFilter("img",     "\\App\\View::img");
+        //compiler->addFilter("css",     "\\App\\View::css");
+        //compiler->addFilter("js",      "\\App\\View::js");
+        //compiler->addFilter("less",    "\\App\\View::less");
+        //compiler->addFilter("coffee",  "\\App\\View::coffee");
     }
 
     /**
@@ -254,19 +254,24 @@ class Service
      * Get cookies service
      *
      * @return Phalcon\Session\Adapter\Files
+     *
      */
     public static function getCrypt()
     {
+        /*
         if self::static_crypt {
             return self::static_crypt;
         }
 
         var crypt;
-        let crypt = new Crypt();
+        let crypt = null;
+
+        new Crypt();
         crypt->setKey("#1dj8$=dp?.ak//j1V$");
 
         let self::static_crypt = crypt;
         return crypt;
+        */
     }
 
     /**

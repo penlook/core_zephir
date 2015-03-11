@@ -50,7 +50,7 @@ class RedisOptimizer extends OptimizerAbstract
 	{
         $call->processExpectedReturn($context);
       	$args = $this->getParams($expression);
-        $func = $args[0];
+        $func = strtolower($args[0]);
 
         switch ($func) {
         	case 'connect':

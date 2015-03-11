@@ -39,6 +39,9 @@ use Phalcon\Logger\Adapter\File as FileAdapter;
 use Phalcon\Mvc\Collection\Manager as CollectionManager;
 //use Phalcon\Translate\Adapter\Gettext as Translator;
 use Phalcon\Db\Adapter\Pdo\Mysql;
+use Phalcon\App\Router;
+use Phalcon\Http\Response\Cookies;
+use Phalcon\Crypt;
 
 /**
  * App Service
@@ -240,7 +243,7 @@ class Service
         }
 
         var cookies;
-        let cookies = new \Phalcon\Http\Response\Cookies();
+        let cookies = new Cookies();
         cookies->useEncryption(true);
 
         let self::static_cookie = cookies;
@@ -259,7 +262,7 @@ class Service
         }
 
         var crypt;
-        let crypt = new \Phalcon\Crypt();
+        let crypt = new Crypt();
         crypt->setKey("#1dj8$=dp?.ak//j1V$");
 
         let self::static_crypt = crypt;

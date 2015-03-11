@@ -18,6 +18,9 @@
 
 namespace Phalcon\Db;
 
+use Phalcon\Db;
+use Phalcon\Db\Reference;
+use Phalcon\Db\Index;
 use Phalcon\Db\Exception;
 use Phalcon\Events\EventsAwareInterface;
 use Phalcon\Events\ManagerInterface;
@@ -276,7 +279,7 @@ abstract class Adapter implements EventsAwareInterface
     public function fetchColumn(var sqlQuery, placeholders = null, column = 0) -> string|bool
     {
         var row;
-        let row = this->fetchOne(sqlQuery, \Phalcon\Db::FETCH_BOTH, placeholders);
+        let row = this->fetchOne(sqlQuery, Db::FETCH_BOTH, placeholders);
         if !empty row && isset row[column] {
             return row[column];
         }
@@ -693,7 +696,7 @@ abstract class Adapter implements EventsAwareInterface
 	 */
 	public function tableExists(string! tableName, string! schemaName = null) -> boolean
 	{
-		return this->fetchOne(this->_dialect->tableExists(tableName, schemaName), \Phalcon\Db::FETCH_NUM)[0] > 0;
+		return this->fetchOne(this->_dialect->tableExists(tableName, schemaName), Db::FETCH_NUM)[0] > 0;
 	}
 
 	/**
@@ -709,7 +712,7 @@ abstract class Adapter implements EventsAwareInterface
 	 */
 	public function viewExists(string! viewName, schemaName = null)
 	{
-		return this->fetchOne(this->_dialect->viewExists(viewName, schemaName), \Phalcon\Db::FETCH_NUM)[0] > 0;
+		return this->fetchOne(this->_dialect->viewExists(viewName, schemaName), Db::FETCH_NUM)[0] > 0;
 	}
 
 	/**
@@ -855,7 +858,7 @@ abstract class Adapter implements EventsAwareInterface
 	 * @param	Phalcon\Db\IndexInterface index
 	 * @return 	boolean
 	 */
-	public function addIndex(string! tableName, string! schemaName, <\Phalcon\Db\IndexInterface> index) -> boolean
+	public function addIndex(string! tableName, string! schemaName, <IndexInterface> index) -> boolean
 	{
 		return this->{"execute"}(this->_dialect->addIndex(tableName, schemaName, index));
 	}
@@ -881,7 +884,7 @@ abstract class Adapter implements EventsAwareInterface
 	 * @param	Phalcon\Db\IndexInterface index
 	 * @return 	boolean
 	 */
-	public function addPrimaryKey(string! tableName, string! schemaName, <\Phalcon\Db\IndexInterface> index) -> boolean
+	public function addPrimaryKey(string! tableName, string! schemaName, <IndexInterface> index) -> boolean
 	{
 		return this->{"execute"}(this->_dialect->addPrimaryKey(tableName, schemaName, index));
 	}
@@ -906,7 +909,7 @@ abstract class Adapter implements EventsAwareInterface
 	 * @param	Phalcon\Db\ReferenceInterface reference
 	 * @return	boolean true
 	 */
-	public function addForeignKey(string! tableName, string! schemaName, <\Phalcon\Db\ReferenceInterface> reference) -> boolean
+	public function addForeignKey(string! tableName, string! schemaName, <ReferenceInterface> reference) -> boolean
 	{
 		return this->{"execute"}(this->_dialect->addForeignKey(tableName, schemaName, reference));
 	}
@@ -950,7 +953,7 @@ abstract class Adapter implements EventsAwareInterface
 		var table, allTables;
 
 		let allTables = [];
-		for table in this->fetchAll(this->_dialect->listTables(schemaName), \Phalcon\Db::FETCH_NUM) {
+		for table in this->fetchAll(this->_dialect->listTables(schemaName), Db::FETCH_NUM) {
 			let allTables[] = table[0];
 		}
 		return allTables;
@@ -971,7 +974,7 @@ abstract class Adapter implements EventsAwareInterface
 		var table, allTables;
 
 		let allTables = [];
-		for table in this->fetchAll(this->_dialect->listViews(schemaName), \Phalcon\Db::FETCH_NUM) {
+		for table in this->fetchAll(this->_dialect->listViews(schemaName), Db::FETCH_NUM) {
 			let allTables[] = table[0];
 		}
 		return allTables;
@@ -993,7 +996,7 @@ abstract class Adapter implements EventsAwareInterface
 		var indexes, index, keyName, indexObjects, name, indexColumns, columns;
 
 		let indexes = [];
-		for index in this->fetchAll(this->_dialect->describeIndexes(table, schema), \Phalcon\Db::FETCH_NUM) {
+		for index in this->fetchAll(this->_dialect->describeIndexes(table, schema), Db::FETCH_NUM) {
 
 			let keyName = index[2];
 			if !isset indexes[keyName] {
@@ -1012,7 +1015,7 @@ abstract class Adapter implements EventsAwareInterface
 			/**
 			 * Every index is abstracted using a Phalcon\Db\Index instance
 			 */
-			let indexObjects[name] = new \Phalcon\Db\Index(name, indexColumns);
+			let indexObjects[name] = new Index(name, indexColumns);
 		}
 
 		return indexObjects;
@@ -1037,7 +1040,7 @@ abstract class Adapter implements EventsAwareInterface
 
 		let references = [];
 
-		for reference in this->fetchAll(this->_dialect->describeReferences(table, schema), \Phalcon\Db::FETCH_NUM) {
+		for reference in this->fetchAll(this->_dialect->describeReferences(table, schema), Db::FETCH_NUM) {
 
 			let constraintName = reference[2];
 			if !isset references[constraintName] {
@@ -1065,7 +1068,7 @@ abstract class Adapter implements EventsAwareInterface
 
 		let referenceObjects = [];
 		for name, arrayReference in references {
-			let referenceObjects[name] = new \Phalcon\Db\Reference(name, [
+			let referenceObjects[name] = new Reference(name, [
 				"referencedSchema"	: arrayReference["referencedSchema"],
 				"referencedTable"	: arrayReference["referencedTable"],
 				"columns"			: arrayReference["columns"],

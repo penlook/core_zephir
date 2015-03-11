@@ -153,8 +153,8 @@ class App
         }
 
         let this->config  = Config ::getInstance(this);
-        let this->service = Service::getInstance();
-        let this->session = Service::getSession();
+        //let this->service = Service::getInstance();
+        //let this->session = Service::getSession();
 
         return this;
     }

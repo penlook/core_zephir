@@ -1,0 +1,4 @@
+#!/bin/bash
+zep phalcon/driver/redis/redis.zep
+cat build/compile-errors.log
+phpunit -v --debug --strict

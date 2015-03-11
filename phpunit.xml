@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+    bootstrap="phalcon/Test.php"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    stopOnFailure="true"
+    syntaxCheck="true">
+    <testsuites>
+        <testsuite name="Penlook-Backend">
+            <file>phalcon/driver/redis/RedisTest.php</file>
+        </testsuite>
+
+    </testsuites>
+</phpunit>

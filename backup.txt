@@ -1,4 +1,3 @@
-# Penlook Core
 "constants-sources": [
     //"ext/phalcon/mvc/view/engine/volt/scanner.h"
 ],

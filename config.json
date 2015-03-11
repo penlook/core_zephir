@@ -52,13 +52,14 @@
     "optimizer-dirs": [
         "phpc"
     ],
-    "constants-sources": [
-        "ext/phalcon/mvc/view/engine/volt/scanner.h"
-    ],
     "extra-sources": [
-        "phalcon/mvc/view/engine/volt/parser.c",
-        "phalcon/mvc/view/engine/volt/scanner.c",
-        "phalcon/mvc/url/utils.c"
+        "phalcon/driver/redis.c",
+        "phalcon/driver/hiredis/hiredis.c",
+        "phalcon/driver/hiredis/async.c",
+        "phalcon/driver/hiredis/net.c",
+        "phalcon/driver/hiredis/dict.c",
+        "phalcon/driver/hiredis/read.c",
+        "phalcon/driver/hiredis/sds.c"
     ],
     "globals": {
         "db.escape_identifiers": {

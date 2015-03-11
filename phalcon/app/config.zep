@@ -30,7 +30,7 @@
 namespace Phalcon\App;
 
 use Phalcon\Config as Phalcon_Config;
-use Phalcon\App\Service;
+//use Phalcon\App\Service;
 
 /**
  * App Configuration
@@ -116,8 +116,8 @@ class Config
 
         var config;
         let config =  new Phalcon_Config(this->getRawConfig());
-        let config->context = this->context;
-        let this->config = config;
+        //let config->context = this->context;
+        //let this->config = config;
 
         return this;
     }
@@ -165,10 +165,10 @@ class Config
      */
     public function get(name, config_name)
     {
-        var redis, value = [];
+        /*var redis, value = [];
         let redis = Service::getInstance()->getRedis();
         let value = json_decode(redis->get(name), true);
-        return value[config_name];
+        return value[config_name];*/
     }
 
     /**
@@ -179,7 +179,8 @@ class Config
     public function getRawConfig()
     {
         Flow::pick("Get raw config from redis");
-
+        return [];
+        /*
         return [
             "language"  : "en_US",
             "app" : this->get("backend.yml", "app"),
@@ -188,7 +189,7 @@ class Config
                 "mysql" : this->get("mysql.yml",  "mysql"),
                 "mongo" : this->get("mongo.yml",  "mongo")
             ]
-        ];
+        ];*/
     }
 
     /**

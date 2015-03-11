@@ -25,6 +25,7 @@ use Phalcon\Di\Service;
 use Phalcon\Di\ServiceInterface;
 use Phalcon\Di\Exception;
 use Phalcon\Events\EventsAwareInterface;
+use Phalcon\Events\ManagerInterface;
 
 /**
  * Phalcon\Di
@@ -58,7 +59,7 @@ use Phalcon\Events\EventsAwareInterface;
  *
  *</code>
  */
-class Di implements DiInterface, \Phalcon\Events\EventsAwareInterface
+class Di implements DiInterface, EventsAwareInterface
 {
 
 	protected _services;
@@ -212,7 +213,7 @@ class Di implements DiInterface, \Phalcon\Events\EventsAwareInterface
 	{
 		var service, instance, reflection, eventsManager;
 
-		let eventsManager = <\Phalcon\Events\ManagerInterface> this->getEventsManager();
+		let eventsManager = <ManagerInterface> this->getEventsManager();
 
 		if typeof eventsManager == "object" {
 			eventsManager->fire("di:beforeServiceResolve", this, ["name": name, "parameters": parameters]);
@@ -404,7 +405,7 @@ class Di implements DiInterface, \Phalcon\Events\EventsAwareInterface
 	 *
 	 * @param Phalcon\Events\ManagerInterface eventsManager
 	 */
-	public function setEventsManager(<\Phalcon\Events\ManagerInterface> eventsManager)
+	public function setEventsManager(<ManagerInterface> eventsManager)
 	{
 		let this->_eventsManager = eventsManager;
 	}
@@ -414,7 +415,7 @@ class Di implements DiInterface, \Phalcon\Events\EventsAwareInterface
 	 *
 	 * @return Phalcon\Events\ManagerInterface
 	 */
-	public function getEventsManager() -> <\Phalcon\Events\ManagerInterface>
+	public function getEventsManager() -> <ManagerInterface>
 	{
 		return this->_eventsManager;
 	}

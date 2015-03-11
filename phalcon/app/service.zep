@@ -29,6 +29,7 @@
 
 namespace Phalcon\App;
 
+use Phalcon\Driver\Redis;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\DI\FactoryDefault;
@@ -40,7 +41,7 @@ use Phalcon\Logger\Adapter\File as FileAdapter;
 use Phalcon\Mvc\Collection\Manager as CollectionManager;
 //use Phalcon\Translate\Adapter\Gettext as Translator;
 use Phalcon\Db\Adapter\Pdo\Mysql;
-use Phalcon\App\Router;
+//use Phalcon\App\Router;
 use Phalcon\Http\Response\Cookies;
 //use Phalcon\Crypt;
 
@@ -78,7 +79,7 @@ class Service
      */
     private function __construct()
 	{
-        let this->service = new FactoryDefault();
+        //let this->service = new FactoryDefault();
     }
 
     /**
@@ -112,7 +113,7 @@ class Service
      */
     public static function getRouter()
     {
-        return Router::getInstance()->getRouter();
+        //return Router::getInstance()->getRouter();
     }
 
     /**
@@ -132,6 +133,7 @@ class Service
      */
     public static function getUrl()
     {
+        /*
         if self::static_url {
             return self::static_url;
         }
@@ -143,6 +145,7 @@ class Service
 
         let self::static_url = url;
         return url;
+        */
     }
 
     /**
@@ -152,6 +155,7 @@ class Service
      */
     public static function getView()
     {
+        /*
         if self::static_view {
             return self::static_view;
         }
@@ -168,6 +172,7 @@ class Service
 
         let self::static_view = view;
         return view;
+        */
     }
 
     /**
@@ -177,6 +182,7 @@ class Service
      */
     public static function getVolt(view, di)
     {
+        /*
         if self::static_volt {
             return self::static_volt;
         }
@@ -194,6 +200,7 @@ class Service
 
         let self::static_volt = volt;
         return volt;
+        */
     }
 
     /**
@@ -220,6 +227,7 @@ class Service
      */
     public static function getSession()
     {
+        /*
         if self::static_session {
             return self::static_session;
         }
@@ -229,6 +237,7 @@ class Service
 
         let self::static_session = session;
         return session;
+        */
     }
 
     /**
@@ -238,6 +247,7 @@ class Service
      */
     public static function getCookie()
     {
+        /*
         if self::static_cookie {
             return self::static_cookie;
         }
@@ -248,6 +258,7 @@ class Service
 
         let self::static_cookie = cookies;
         return cookies;
+        */
     }
 
     /**
@@ -387,9 +398,10 @@ class Service
             return self::static_redis;
         }
 
-        var redis;
-        let redis = new \Redis();
-        redis->connect("localhost", 6379);
+        var redis = [];
+
+        let redis = new Redis();
+        redis->connect();
 
         let self::static_redis = redis;
         return redis;

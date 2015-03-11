@@ -29,7 +29,7 @@
 
 namespace Phalcon\App;
 
-//use Phalcon\Mvc\View\Simple;
+use Phalcon\App\App;
 
 /**
  * Application Flow

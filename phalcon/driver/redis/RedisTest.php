@@ -47,8 +47,6 @@ class RedisTest extends Test
 	public function testRedis()
 	{
 		$redis = Redis::getInstance();
-		$redis->connect();
-		var_dump($redis->getConnection());
 		die();
 	}
 }

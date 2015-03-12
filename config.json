@@ -55,7 +55,6 @@
     "extra-sources": [
         "phalcon/driver/redis.c",
         "phalcon/driver/hiredis/hiredis.c",
-        "phalcon/driver/hiredis/async.c",
         "phalcon/driver/hiredis/net.c",
         "phalcon/driver/hiredis/dict.c",
         "phalcon/driver/hiredis/read.c",

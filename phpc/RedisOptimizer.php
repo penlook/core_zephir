@@ -56,18 +56,34 @@ class RedisOptimizer extends OptimizerAbstract
       	$args = $this->getParams($expression);
         $func = strtolower($args[0]);
 
+        $call->processExpectedReturn($context);
+
+		$symbolVariable = $call->getSymbolVariable();
+		if ($symbolVariable->getType() != 'variable') {
+			throw new CompilerException("Returned values by functions can only be assigned to variant variables", $expression);
+		}
+
+		if ($call->mustInitSymbolVariable()) {
+			$symbolVariable->initVariant($context);
+		}
+
+        $args = $call->getReadOnlyResolvedParams($expression['parameters'], $context, $expression);
+
         switch ($func) {
         	case 'connect':
         		$other_arguments = $args[1] . ','. $args[2];
         		break;
 
         	default:
-        		$other_arguments = $args[1] . ','. $args[2] . ',' . $args[3];
+        		$other_arguments = $args[1] . ','. $args[2] .','. $args[3];
         		break;
         }
 
-        $args = $call->getReadOnlyResolvedParams($expression['parameters'], $context, $expression);
-        return new CompiledExpression('function', 'redis_' . $func .'('. $other_arguments . ')', $expression);
+        $cmd = 'redis_' . $func .'('. $symbolVariable->getName(). ',' . $other_arguments . ');';
+        echo $cmd;
+
+        $context->codePrinter->output($cmd);
+        return new CompiledExpression('variable', $symbolVariable->getRealName(), $expression);
 	}
 
 }

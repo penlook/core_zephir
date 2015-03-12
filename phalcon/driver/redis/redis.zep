@@ -42,6 +42,7 @@ class Redis {
 	 * Redis connection
 	 */
 	private connection;
+	private setkey;
 
     /**
      * Constructor
@@ -49,7 +50,8 @@ class Redis {
      */
     private function __construct()
 	{
-		this->connect();
+		print_r(this->connect());
+		print_r("\n");
 	}
 
 	public static function getInstance()
@@ -63,7 +65,12 @@ class Redis {
 
 	public function connect(host = "127.0.0.1", port = "6379")
 	{
-		let this->connection = redis("connect", host, port);
+		var connection;
+		let connection = redis("connect", host, port);
+		var_dump(connection);
+		var result;
+		let result = redis("set", connection, "value", "value2");
+		return result;
 	}
 
 	public function getConnection()
@@ -71,15 +78,16 @@ class Redis {
 		return this->connection;
 	}
 
+	public function getKey()
+	{
+		return this->setkey;
+	}
+
 	public function set(key, value)
 	{
-		var connection;
-		let connection = this->connection;
-		redis("SET", connection, "123", "1234");
 	}
 
 	public function get(key)
 	{
-		//return redis("GET", "12341", "123132");
 	}
 }

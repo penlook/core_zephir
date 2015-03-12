@@ -72,8 +72,8 @@ void redis_connect(zval *return_value, char* *host, int *port) {
 /**
  * Parse context from PHP Redis resource
  *
- * @param {zval*} return_value Result handler
- * @param {zval*} redis Redis connection
+ * @param {zval} *return_value Result handler
+ * @param {zval} *redis Redis connection
  */
 redisContext *parse_context(zval *return_value, zval *redis) {
 
@@ -93,7 +93,7 @@ redisContext *parse_context(zval *return_value, zval *redis) {
  * Return redis result
  *
  * @param {zval} return_value Result handler
- * @param {redisReply*} reply Redis reply from execution
+ * @param {redisReply} *reply Redis reply from execution
  */
 void return_result(zval *return_value, redisReply *reply) {
 	if (reply == NULL) {

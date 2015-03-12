@@ -38,7 +38,9 @@
 
 #define REDIS_RESOURCE "REDIS RESOURCE"
 
-void redis_connect(zval *return_value, zval *host_, zval *port_) {
+zval *redis_connect( zval *host_, zval *port_) {
+
+	zval *return_value;
 
 	// Convert zend interface
 	char* host = Z_STRVAL_P(host_);
@@ -54,28 +56,30 @@ void redis_connect(zval *return_value, zval *host_, zval *port_) {
 	} else {
 		ZEND_REGISTER_RESOURCE(return_value, context, le_resource);
 	}
+
+	return *return_value;
 }
 
 redisContext *parseContextFromResource(zval *redis) {
 
 	redisContext *context;
 
-	if (zend_parse_parameters(PHP_RINIT_FUNCTION() TSRMLS_CC, "r", &redis) == FAILURE) {
+	/*if (zend_parse_parameters(PHP_RINIT_FUNCTION() TSRMLS_CC, "r", &redis, NULL, NULL) == FAILURE) {
         RETURN_FALSE;
-    }
+    }*/
 
     int le_resource = zend_register_list_destructors_ex(NULL, NULL, REDIS_RESOURCE, 12345);
     ZEND_FETCH_RESOURCE(context, redisContext*, &redis, -1, REDIS_RESOURCE, le_resource);
 
-    return *context;
+    return context;
 }
 
-void redis_set(zval *return_value, zval *redis, zval *key_, zval *value_) {
+zval *redis_set(zval redis, zval *key_, zval *value_) {
 
 	// Convert zend interface
 	char* key   = Z_STRVAL_P(key_);
 	char* value = Z_STRVAL_P(value_);
-	redisContext *context = parseContextFromResource(*redis);
+	redisContext *context = parseContextFromResource(*redis)
 	char cmd[256];
 	snprintf(cmd, sizeof cmd, "SET %s %s", key, value);
 	redisCommand(context, cmd);

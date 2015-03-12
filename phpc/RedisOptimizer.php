@@ -34,7 +34,11 @@ class RedisOptimizer extends OptimizerAbstract
 		$mixs = $expression['parameters'];
 
 		foreach ($mixs as $arg) {
-			$params[] = $arg["parameter"]["value"];
+			if ($arg["parameter"]["value"] == NULL) {
+				print($arg["parameter"]);
+			} else {
+				$params[] = $arg["parameter"]["value"];
+			}
 		}
 
 		return $params;
@@ -62,19 +66,8 @@ class RedisOptimizer extends OptimizerAbstract
         		break;
         }
 
-        $symbolVariable = $call->getSymbolVariable();
-		if ($symbolVariable->getType() != 'variable') {
-			throw new CompilerException("Returned values by functions can only be assigned to variant variables", $expression);
-		}
-
-		if ($call->mustInitSymbolVariable()) {
-			$symbolVariable->initVariant($context);
-		}
-
-		$symbolVariable->setDynamicTypes('resource');
         $args = $call->getReadOnlyResolvedParams($expression['parameters'], $context, $expression);
-        $context->codePrinter->output('redis_' . $func .'('. $symbolVariable->getName() .',' . $other_arguments . ');');
-        return new CompiledExpression('variable', $symbolVariable->getRealName(), $expression);
+        return new CompiledExpression('function', 'redis_' . $func .'('. $other_arguments . ')', $expression);
 	}
 
 }

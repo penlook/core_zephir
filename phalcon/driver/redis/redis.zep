@@ -73,7 +73,9 @@ class Redis {
 
 	public function set(key, value)
 	{
-		//redis("SET", "123", "1234");
+		var connection;
+		let connection = this->connection;
+		redis("SET", connection, "123", "1234");
 	}
 
 	public function get(key)

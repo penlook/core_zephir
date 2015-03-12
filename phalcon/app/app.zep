@@ -31,7 +31,7 @@ namespace Phalcon\App;
 
 use Phalcon\App\Flow;
 use Phalcon\App\Config;
-//use Phalcon\App\Service;
+use Phalcon\App\Service;
 //use Phalcon\Mvc\Application;
 
 /**
@@ -153,8 +153,8 @@ class App
         }
 
         let this->config  = Config ::getInstance(this);
-        //let this->service = Service::getInstance();
-        //let this->session = Service::getSession();
+        let this->service = Service::getInstance();
+        let this->session = Service::getSession();
 
         return this;
     }
@@ -197,7 +197,7 @@ class App
      */
     public function setLogger(logger)
     {
-        //let this->logger = logger;
+        let this->logger = logger;
         return this;
     }
 
@@ -208,7 +208,7 @@ class App
      */
     public function getLogger()
     {
-        //return this->logger;
+        return this->logger;
     }
 
     /**
@@ -308,22 +308,20 @@ class App
     public function getListServices()
     {
         Flow::pick("Get list services");
-        return [];
 
-        /*
         return [
             "url"               : Service::getUrl(),
             "config"            : Service::getConfig(),
             "router"            : Service::getRouter(),
             "cookie"            : Service::getCookie(),
-            "crypt"             : Service::getCrypt(),
+            //"crypt"             : Service::getCrypt(),
             "redis"             : Service::getRedis(),
             "view"              : Service::getView(),
             "session"           : Service::getSession(),
             "mysql"             : Service::getMySQL(),
             "mongo"             : Service::getMongoDB(),
             "collectionManager" : Service::getCollectionManager()
-        ];*/
+        ];
     }
 
     /**

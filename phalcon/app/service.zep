@@ -29,20 +29,22 @@
 
 namespace Phalcon\App;
 
-use Phalcon\Driver\Redis;
+use Phalcon\App\Config;
+use Phalcon\App\Flow;
+use Phalcon\Driver\Redis\Redis;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
-//use App\Plugin\Volt as VoltEngine;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Logger\Adapter\File as FileAdapter;
 use Phalcon\Mvc\Collection\Manager as CollectionManager;
-//use Phalcon\Translate\Adapter\Gettext as Translator;
 use Phalcon\Db\Adapter\Pdo\Mysql;
-//use Phalcon\App\Router;
 use Phalcon\Http\Response\Cookies;
+use Phalcon\App\Router;
+//use Phalcon\Translate\Adapter\Gettext as Translator;
+//use App\Plugin\Volt as VoltEngine;
 //use Phalcon\Crypt;
 
 /**
@@ -79,7 +81,7 @@ class Service
      */
     private function __construct()
 	{
-        //let this->service = new FactoryDefault();
+        let this->service = new FactoryDefault();
     }
 
     /**
@@ -113,7 +115,7 @@ class Service
      */
     public static function getRouter()
     {
-        //return Router::getInstance()->getRouter();
+        return Router::getInstance()->getRouter();
     }
 
     /**
@@ -133,7 +135,6 @@ class Service
      */
     public static function getUrl()
     {
-        /*
         if self::static_url {
             return self::static_url;
         }
@@ -145,7 +146,6 @@ class Service
 
         let self::static_url = url;
         return url;
-        */
     }
 
     /**
@@ -155,7 +155,6 @@ class Service
      */
     public static function getView()
     {
-        /*
         if self::static_view {
             return self::static_view;
         }
@@ -172,7 +171,6 @@ class Service
 
         let self::static_view = view;
         return view;
-        */
     }
 
     /**
@@ -182,7 +180,6 @@ class Service
      */
     public static function getVolt(view, di)
     {
-        /*
         if self::static_volt {
             return self::static_volt;
         }
@@ -200,7 +197,6 @@ class Service
 
         let self::static_volt = volt;
         return volt;
-        */
     }
 
     /**
@@ -210,14 +206,17 @@ class Service
      */
     public static function setCompiler(compiler)
     {
-        //compiler->addFilter("trans",   "\\App\\View::trans");
-        //compiler->addFilter("site",    "\\App\\View::site");
-        //compiler->addFilter("json",    "\\App\\View::json");
-        //compiler->addFilter("img",     "\\App\\View::img");
-        //compiler->addFilter("css",     "\\App\\View::css");
-        //compiler->addFilter("js",      "\\App\\View::js");
-        //compiler->addFilter("less",    "\\App\\View::less");
-        //compiler->addFilter("coffee",  "\\App\\View::coffee");
+        var view;
+        let view = "\\Phalcon\\App\\View";
+
+        compiler->addFilter("trans",   view . "::trans");
+        compiler->addFilter("site",    view . "::site");
+        compiler->addFilter("json",    view . "::json");
+        compiler->addFilter("img",     view . "::img");
+        compiler->addFilter("css",     view . "::css");
+        compiler->addFilter("js",      view . "::js");
+        compiler->addFilter("less",    view . "::less");
+        compiler->addFilter("coffee",  view . "::coffee");
     }
 
     /**
@@ -227,7 +226,6 @@ class Service
      */
     public static function getSession()
     {
-        /*
         if self::static_session {
             return self::static_session;
         }
@@ -237,7 +235,6 @@ class Service
 
         let self::static_session = session;
         return session;
-        */
     }
 
     /**
@@ -247,7 +244,6 @@ class Service
      */
     public static function getCookie()
     {
-        /*
         if self::static_cookie {
             return self::static_cookie;
         }
@@ -258,7 +254,6 @@ class Service
 
         let self::static_cookie = cookies;
         return cookies;
-        */
     }
 
     /**
@@ -390,7 +385,7 @@ class Service
     /**
      * Get Redis services
      *
-     * @return \Redis
+     * @return Redis
      */
     public static function getRedis()
     {

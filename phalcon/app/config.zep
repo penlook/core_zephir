@@ -30,7 +30,7 @@
 namespace Phalcon\App;
 
 use Phalcon\Config as Phalcon_Config;
-//use Phalcon\App\Service;
+use Phalcon\App\Service;
 
 /**
  * App Configuration

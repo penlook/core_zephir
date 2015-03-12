@@ -36,7 +36,7 @@
         "non-valid-decrement": true,
         "non-valid-increment": true,
         "non-valid-clone": true,
-        "non-valid-new": true,
+        "non-valid-new": false,
         "non-array-access": true,
         "invalid-reference": true,
         "invalid-typeof-comparison": true,
@@ -52,13 +52,19 @@
     "optimizer-dirs": [
         "phpc"
     ],
+    "constants-sources": [
+        "ext/phalcon/mvc/view/engine/volt/scanner.h"
+    ],
     "extra-sources": [
         "phalcon/driver/redis.c",
         "phalcon/driver/hiredis/hiredis.c",
         "phalcon/driver/hiredis/net.c",
         "phalcon/driver/hiredis/dict.c",
         "phalcon/driver/hiredis/read.c",
-        "phalcon/driver/hiredis/sds.c"
+        "phalcon/driver/hiredis/sds.c",
+        "phalcon/mvc/view/engine/volt/parser.c",
+        "phalcon/mvc/view/engine/volt/scanner.c",
+        "phalcon/mvc/url/utils.c"
     ],
     "globals": {
         "db.escape_identifiers": {

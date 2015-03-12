@@ -45,13 +45,6 @@ use Phalcon\Driver\Redis\Exception;
 class Redis {
 
 	/**
-     * Redis static instance
-     *
-     * @var Phalcon\Driver
-     */
-	private static static_redis;
-
-	/**
 	 * Redis connection
 	 */
 	private connection;

@@ -79,4 +79,13 @@ class RedisTest extends Test
 		$this->assertEquals(false, $flag);
 	}
 
+	public function testRedisSetGet()
+	{
+		$redis = new Redis();
+		$redis->connect();
+		$this->assertNotEquals(false, $redis->getConnection());
+		$this->assertEquals(true, is_resource($redis->getConnection()));
+
+	}
+
 }

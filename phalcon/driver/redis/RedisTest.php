@@ -74,18 +74,29 @@ class RedisTest extends Test
 		}
 
 		$this->assertNotEquals(false, $redis->getConnection());
+		$this->assertEquals(true, is_resource($redis->getConnection()));
 
 		// Not throw exception with default port number
 		$this->assertEquals(false, $flag);
+	}
+
+	public function testRedisGetNotExistKey()
+	{
+		$redis = new Redis();
+		$redis->connect();
+		$this->assertEquals(true, is_resource($redis->getConnection()));
+		$key = "TEST" . rand(1000, 1000000);
+		$this->assertEquals(false, $redis->get($key));
 	}
 
 	public function testRedisSetGet()
 	{
 		$redis = new Redis();
 		$redis->connect();
-		$this->assertNotEquals(false, $redis->getConnection());
 		$this->assertEquals(true, is_resource($redis->getConnection()));
-
+		$key = "TEST" . rand(1000, 1000000);
+		$redis->set($key, "ABCDZZZ");
+		$this->assertEquals("ABCDZZZ", $redis->get($key));
 	}
 
 }

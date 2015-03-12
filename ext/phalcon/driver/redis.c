@@ -46,9 +46,9 @@ int le_redis;
 /**
  * Establish new redis connection
  *
- * @param return_value Value will be returned
- * @param host_        Ip address
- * @param port_        Port number
+ * @param {zval}  *return_value Result handler
+ * @param {char*} *host         Ip address
+ * @param {char*} *port         Port number
  */
 void redis_connect(zval *return_value, char* *host, int *port) {
 
@@ -72,7 +72,8 @@ void redis_connect(zval *return_value, char* *host, int *port) {
 /**
  * Parse context from PHP Redis resource
  *
- * @param redis Redis connection
+ * @param {zval*} return_value Result handler
+ * @param {zval*} redis Redis connection
  */
 redisContext *parse_context(zval *return_value, zval *redis) {
 
@@ -89,35 +90,49 @@ redisContext *parse_context(zval *return_value, zval *redis) {
 }
 
 /**
+ * Return redis result
+ *
+ * @param {zval} return_value Result handler
+ * @param {redisReply*} reply Redis reply from execution
+ */
+void return_result(zval *return_value, redisReply *reply) {
+	if (reply == NULL) {
+		// Redis error
+		RETURN_FALSE;
+	} else {
+		ZVAL_STRINGL(return_value, reply->str, reply->len, 1);
+	}
+}
+
+/**
  * Redis SET
  *
- * @param return_value Value will be returned
- * @param redis        Redis context
- * @param key_		   Key
- * @param value_       Value
+ * @param {zval}  *return_value Result handler
+ * @param {zval}  *redis        Redis context
+ * @param {char*} *key		    Key
+ * @param {char*} *value        Value
  */
 void redis_set(zval *return_value, zval *redis, char* *key, char* *value) {
 
 	redisContext *context = parse_context(return_value, redis);
 
 	// Execute redis command identified by context
-	char* reply = redisCommand(context, "SET %s %s", *key, *value);
-	ZVAL_STRINGL(return_value, reply, strlen(reply), 1);
+	redisReply *reply = redisCommand(context, "SET %s %s", *key, *value);
+	return_result(return_value, reply);
 }
 
 /**
  * Redis GET
  *
- * @param return_value Value will be returned
- * @param redis        Redis context
- * @param key_		   Key
- * @param value_       Value
+ * @param {zval}  *return_value Result handler
+ * @param {zval}  *redis        Redis context
+ * @param {char*} *key          Key
  */
 void redis_get(zval *return_value, zval *redis, char* *key) {
 
 	redisContext *context = parse_context(return_value, redis);
 
 	// Execute redis command identified by context
-	char* reply = redisCommand(context, "GET %s", *key);
-	ZVAL_STRINGL(return_value, reply, strlen(reply), 1);
+	redisReply *reply = redisCommand(context, "GET %s", *key);
+	return_result(return_value, reply);
 }

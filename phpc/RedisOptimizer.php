@@ -1,20 +1,31 @@
 <?php
-/*
- +------------------------------------------------------------------------+
- | Phalcon Framework                                                      |
- +------------------------------------------------------------------------+
- | Copyright (c) 2011-2014 Phalcon Team (http://www.phalconphp.com)       |
- +------------------------------------------------------------------------+
- | This source file is subject to the New BSD License that is bundled     |
- | with this package in the file docs/LICENSE.txt.                        |
- |                                                                        |
- | If you did not receive a copy of the license and are unable to         |
- | obtain it through the world-wide-web, please send an email             |
- | to license@phalconphp.com so we can send you a copy immediately.       |
- +------------------------------------------------------------------------+
- | Authors: Andres Gutierrez <andres@phalconphp.com>                      |
- |          Eduar Carvajal <eduar@phalconphp.com>                         |
- +------------------------------------------------------------------------+
+/**
+ * Penlook Project
+ *
+ * Copyright (c) 2015 Penlook Development Team
+ *
+ * --------------------------------------------------------------------
+ *
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
+ *
+ * --------------------------------------------------------------------
+ *
+ * Authors:
+ *     Loi Nguyen       <loint@penlook.com>
+ *     Tin Nguyen       <tinntt@penlook.com>
+ *     Nam Vo           <namvh@penlook.com>
  */
 
 namespace Zephir\Optimizers\FunctionCall;
@@ -26,6 +37,17 @@ use Zephir\CompiledExpression;
 use Zephir\Optimizers\OptimizerAbstract;
 use Zephir\HeadersManager;
 
+/**
+ * Redis Optimizer
+ *
+ * @category   Penlook Application
+ * @package    Optimizer\Redis
+ * @copyright  Penlook Development Team
+ * @license    GNU Affero General Public
+ * @version    1.0
+ * @link       http://github.com/penlook
+ * @since      Class available since Release 1.0
+ */
 class RedisOptimizer extends OptimizerAbstract
 {
 	public function getParams($expression)
@@ -34,11 +56,7 @@ class RedisOptimizer extends OptimizerAbstract
 		$mixs = $expression['parameters'];
 
 		foreach ($mixs as $arg) {
-			if ($arg["parameter"]["value"] == NULL) {
-				print($arg["parameter"]);
-			} else {
-				$params[] = $arg["parameter"]["value"];
-			}
+			$params[] = $arg["parameter"]["value"];
 		}
 
 		return $params;
@@ -75,13 +93,18 @@ class RedisOptimizer extends OptimizerAbstract
         		break;
 
         	default:
-        		$other_arguments = $args[1] . ','. $args[2] .','. $args[3];
+        		$args_len = count($args);
+        		$other_arguments = "";
+
+        		for ($i = 1; $i < $args_len; $i++) {
+        			$other_arguments .= $args[$i] . ',';
+        		}
+
+        		$other_arguments = substr($other_arguments, 0, count($other_arguments) - 2);
         		break;
         }
 
         $cmd = 'redis_' . $func .'('. $symbolVariable->getName(). ',' . $other_arguments . ');';
-        echo $cmd;
-
         $context->codePrinter->output($cmd);
         return new CompiledExpression('variable', $symbolVariable->getRealName(), $expression);
 	}

@@ -44,9 +44,39 @@ use Phalcon\Driver\Redis\Redis;
  */
 class RedisTest extends Test
 {
-	public function testRedis()
+
+	public function testRedisConnectionWrongPort()
 	{
-		$redis = Redis::getInstance();
-		die();
+		$redis = new Redis();
+		$flag = false;
+
+		try {
+			$redis->connect("localhost", 12345);
+		} catch (\Exception $e) {
+			$this->assertEquals(10001, $e->getCode());
+			$this->assertEquals(false, $redis->getConnection());
+			$flag = true;
+		}
+
+		// Must throw exception with wrong port number
+		$this->assertEquals(true, $flag);
 	}
+
+	public function testRedisConnectionDefaultPort()
+	{
+		$redis = new Redis();
+		$flag = false;
+
+		try {
+			$redis->connect();
+		} catch (\Exception $e) {
+			$flag = true;
+		}
+
+		$this->assertNotEquals(false, $redis->getConnection());
+
+		// Not throw exception with default port number
+		$this->assertEquals(false, $flag);
+	}
+
 }

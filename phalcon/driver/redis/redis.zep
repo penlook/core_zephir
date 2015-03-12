@@ -29,6 +29,19 @@
 
 namespace Phalcon\Driver\Redis;
 
+use Phalcon\Driver\Redis\Exception;
+
+/**
+ * Redis Driver
+ *
+ * @category   Penlook Application
+ * @package    Driver\Redis
+ * @copyright  Penlook Development Team
+ * @license    GNU Affero General Public
+ * @version    1.0
+ * @link       http://github.com/penlook
+ * @since      Class available since Release 1.0
+ */
 class Redis {
 
 	/**
@@ -42,52 +55,68 @@ class Redis {
 	 * Redis connection
 	 */
 	private connection;
-	private setkey;
 
-    /**
-     * Constructor
-     *
-     */
-    private function __construct()
+	/**
+	 * Establish new redis connection
+	 *
+	 * @param  {string} host = "127.0.0.1" Ip address
+	 * @param  {int}    port = 6378        Port number
+	 * @return {resource} Redis resource
+	 */
+	public function connect(host = "127.0.0.1", port = 6379)
 	{
-		print_r(this->connect());
-		print_r("\n");
+		if host == "localhost" {
+			let host = "127.0.0.1";
+		}
+
+		var ex;
+
+		try {
+			let this->connection = redis("connect", host, port);
+		} catch Exception, ex {
+			throw ex;
+		}
 	}
 
-	public static function getInstance()
-	{
-		if ! self::static_redis {
-            let self::static_redis = new Redis();
-        }
-
-        return self::static_redis;
-	}
-
-	public function connect(host = "127.0.0.1", port = "6379")
-	{
-		var connection;
-		let connection = redis("connect", host, port);
-		var_dump(connection);
-		var result;
-		let result = redis("set", connection, "value", "value2");
-		return result;
-	}
-
+	/**
+	 * Get redis connection
+	 *
+	 * @return {resource} Redis resource
+	 */
 	public function getConnection()
 	{
 		return this->connection;
 	}
 
-	public function getKey()
-	{
-		return this->setkey;
-	}
-
+	/**
+	 * Set key and value
+	 *
+	 * @param {string} key
+	 * @param {string} value
+	 * @return {string} redis response
+	 */
 	public function set(key, value)
 	{
+		var connection, reply;
+		let connection = this->connection;
+		let key = (string) key;
+		let value = (string) value;
+		let reply = redis("set", connection, key, value);
+		return reply;
 	}
 
+	/**
+	 * Set key and value
+	 *
+	 * @param {string} key
+	 * @return {string} value
+	 */
 	public function get(key)
 	{
+		var connection, reply;
+		let connection = this->connection;
+		let key = (string) key;
+		let reply = redis("get", connection, key);
+		return reply;
 	}
 }

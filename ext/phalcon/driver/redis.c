@@ -34,132 +34,90 @@
 #include "php.h"
 #include "php_ext.h"
 #include "hiredis/hiredis.h"
+#include "zend_exceptions.h"
 #include <stdlib.h>
 
 #define REDIS_RESOURCE   "REDIS RESOURCE"
 #define REDIS_MODULE_ID  12345
 
+// List entities of redis
 int le_redis;
-int le_redis_persist;
 
-static void redis_persist_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
-{
-    redisContext *context = (redisContext*)rsrc->ptr;
-
-    if (context) {
-        if (context->obuf) {
-            pefree(context->obuf, 1);
-        }
-        pefree(context, 1);
-    }
-}
-
-static void redis_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
-{
-    redisContext *context = (redisContext*)rsrc->ptr;
-
-    if (context) {
-        if (context->obuf) {
-            efree(context->obuf);
-        }
-        efree(context);
-    }
-}
-
-void redis_connect(zval *return_value, zval *host_, zval *port_) {
-
-	// Convert zend interface
-	char* host = Z_STRVAL_P(host_);
-	int port = atoi(Z_STRVAL_P(port_));
+/**
+ * Establish new redis connection
+ *
+ * @param return_value Value will be returned
+ * @param host_        Ip address
+ * @param port_        Port number
+ */
+void redis_connect(zval *return_value, char* *host, int *port) {
 
 	// Establish redis connection
-	redisContext *context = redisConnect(host, port);
-	le_redis = zend_register_list_destructors_ex(NULL, NULL, REDIS_RESOURCE, REDIS_MODULE_ID);
+	redisContext *context = redisConnect(*host, *port);
 
 	if (context != NULL && context->err) {
-    	printf("Redis error: %s\n", context->errstr);
+
+		// Can not establish connection to redis
+    	zend_throw_exception(zend_exception_get_default(TSRMLS_C), "Connection was refused !", 10001 TSRMLS_CC);
+    	RETURN_FALSE;
+
 	} else {
+
+		// Create new PHP resource based on redis context information
+		le_redis = zend_register_list_destructors_ex(NULL, NULL, REDIS_RESOURCE, REDIS_MODULE_ID);
 		ZEND_REGISTER_RESOURCE(return_value, context, le_redis);
 	}
 }
 
-/*
-void parseContextFromResource(zval *redis) {
-	zval *return_value;
+/**
+ * Parse context from PHP Redis resource
+ *
+ * @param redis Redis connection
+ */
+redisContext *parse_context(zval *return_value, zval *redis) {
+
+	// Redis context - connection information
 	redisContext *context;
-	int le_resource = zend_register_list_destructors_ex(NULL, NULL, REDIS_RESOURCE, 12345);
 
-	if (Z_TYPE_P(redis) == IS_RESOURCE) {
-		redisContext *context = (redisContext*) zend_fetch_resource(&redis TSRMLS_CC, -1, REDIS_RESOURCE, NULL, 1, le_resource);
-		ZEND_VERIFY_RESOURCE(context);
-	} else {
-		printf("%s\n", "Redis resource error !");
-	}
+	// Decode resource to redisContext
+	ZEND_FETCH_RESOURCE(context, redisContext*, &redis, -1, REDIS_RESOURCE, le_redis);
 
-	/*
-	context = (redisContext*) zend_fetch_resource(&redis TSRMLS_CC, -1, REDIS_RESOURCE, NULL, 1, le_resource);
+	// Verify context
+	ZEND_VERIFY_RESOURCE(context);
 
-	redisContext *c = redisConnect("127.0.0.1", 6379);
-	if (c != NULL && c->err) {
-    	printf("Error: %s\n", c->errstr);
-    	// handle error
-	}
-
-	redisCommand(c, "SET LOINT VAALUE");
-	printf("%s\n", "FETCH DONE");
-}
-*/
-
-void redis_set(zval *return_value, zval *redis, zval *key_, zval *value_) {
-
-	char* key   = Z_STRVAL_P(key_);
-	char* value = Z_STRVAL_P(value_);
-
-	printf("%s\n", key);
-	printf("%s\n", value);
-
-	char* variable = "Hello";
-	ZVAL_STRINGL(return_value, variable, strlen(variable), 1);
-
-	/*
-	redisContext *context;
-	if (Z_TYPE_P(redis) == IS_RESOURCE) {
-		le_redis = zend_register_list_destructors_ex(NULL, NULL, REDIS_RESOURCE, REDIS_MODULE_ID);
-		//le_redis_persist = zend_register_list_destructors_ex(NULL, redis_persist_dtor, REDIS_RESOURCE, REDIS_MODULE_ID);
-		ZEND_FETCH_RESOURCE(context, redisContext*, &redis, -1, REDIS_RESOURCE, le_redis);
-
-
-
-	} else {
-		printf("%s\n", "Redis resource error !");
-	}
-	*/
+	return context;
 }
 
-/*
-void parseContextFromResource(zval *redis) {
+/**
+ * Redis SET
+ *
+ * @param return_value Value will be returned
+ * @param redis        Redis context
+ * @param key_		   Key
+ * @param value_       Value
+ */
+void redis_set(zval *return_value, zval *redis, char* *key, char* *value) {
 
-	/*redisContext *context;
+	redisContext *context = parse_context(return_value, redis);
 
-	if (zend_parse_parameters(PHP_RINIT_FUNCTION() TSRMLS_CC, "r", &redis, NULL, NULL) == FAILURE) {
-        RETURN_FALSE;
-    }
-
-    int le_resource = zend_register_list_destructors_ex(NULL, NULL, REDIS_RESOURCE, 12345);
-    ZEND_FETCH_RESOURCE(context, redisContext*, &redis, -1, REDIS_RESOURCE, le_resource);
-
-    return context;
+	// Execute redis command identified by context
+	char* reply = redisCommand(context, "SET %s %s", *key, *value);
+	ZVAL_STRINGL(return_value, reply, strlen(reply), 1);
 }
 
-void redis_set(zval *return_value, zval *key_, zval *value_) {
-	RETURN_STRING(return_value, 1);
+/**
+ * Redis GET
+ *
+ * @param return_value Value will be returned
+ * @param redis        Redis context
+ * @param key_		   Key
+ * @param value_       Value
+ */
+void redis_get(zval *return_value, zval *redis, char* *key) {
 
-	// Convert zend interface
-	/*char* key   = Z_STRVAL_P(key_);
-	char* value = Z_STRVAL_P(value_);
-	redisContext *context = parseContextFromResource(*redis)
-	char cmd[256];
-	snprintf(cmd, sizeof cmd, "SET %s %s", key, value);
-	redisCommand(context, cmd);
+	redisContext *context = parse_context(return_value, redis);
+
+	// Execute redis command identified by context
+	char* reply = redisCommand(context, "GET %s", *key);
+	ZVAL_STRINGL(return_value, reply, strlen(reply), 1);
 }
-*/

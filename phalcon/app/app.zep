@@ -315,7 +315,6 @@ class App
             "config"            : Service::getConfig(),
             "router"            : Service::getRouter(),
             "cookie"            : Service::getCookie(),
-            //"crypt"             : Service::getCrypt(),
             "redis"             : Service::getRedis(),
             "view"              : Service::getView(),
             "session"           : Service::getSession(),
@@ -333,7 +332,7 @@ class App
      */
     public function setLoader(loader)
     {
-        //let this->loader = loader;
+        let this->loader = loader;
         return this;
     }
 
@@ -345,7 +344,7 @@ class App
      */
     public function getLoader()
     {
-        //return this->loader;
+        return this->loader;
     }
 
     /**
@@ -356,7 +355,7 @@ class App
      */
     public function setApplication(app)
     {
-        //let this->application = app;
+        let this->application = app;
         return this;
     }
 
@@ -405,7 +404,7 @@ class App
      */
     public function setTemplate(template)
     {
-        //let this->template = realpath(template);
+        let this->template = realpath(template);
         return this;
     }
 
@@ -416,7 +415,7 @@ class App
      */
     public function getTemplate()
     {
-        //return this->template;
+        return this->template;
     }
 
     /**
@@ -444,7 +443,7 @@ class App
      */
     public function html()
     {
-        //return this->html;
+        return this->html;
     }
 
     /**

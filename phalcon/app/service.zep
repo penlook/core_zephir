@@ -43,9 +43,9 @@ use Phalcon\Mvc\Collection\Manager as CollectionManager;
 use Phalcon\Db\Adapter\Pdo\Mysql;
 use Phalcon\Http\Response\Cookies;
 use Phalcon\App\Router;
+
 //use Phalcon\Translate\Adapter\Gettext as Translator;
 //use App\Plugin\Volt as VoltEngine;
-//use Phalcon\Crypt;
 
 /**
  * App Service
@@ -254,30 +254,6 @@ class Service
 
         let self::static_cookie = cookies;
         return cookies;
-    }
-
-    /**
-     * Get cookies service
-     *
-     * @return Phalcon\Session\Adapter\Files
-     *
-     */
-    public static function getCrypt()
-    {
-        /*
-        if self::static_crypt {
-            return self::static_crypt;
-        }
-
-        var crypt;
-        let crypt = null;
-
-        new Crypt();
-        crypt->setKey("#1dj8$=dp?.ak//j1V$");
-
-        let self::static_crypt = crypt;
-        return crypt;
-        */
     }
 
     /**

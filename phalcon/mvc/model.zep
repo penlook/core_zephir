@@ -20,6 +20,11 @@ namespace Phalcon\Mvc;
 
 use Phalcon\DiInterface;
 use Phalcon\Mvc\Model\Message;
+use Phalcon\Mvc\Query;
+use Phalcon\Di;
+use Phalcon\Mvc\Model\ValidationFailed;
+use Phalcon\Mvc\Model\MetaDataInterface;
+use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Mvc\ModelInterface;
 use Phalcon\Mvc\Model\ResultInterface;
 use Phalcon\Di\InjectionAwareInterface;

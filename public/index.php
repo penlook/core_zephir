@@ -30,6 +30,13 @@
  *     Viet Nguyen      <vietna@penlook.com>
  *
  */
+
+include __DIR__ . "/../debug/autoload.php";
+
+$app = new Phalcon\App\Controller\AbcController();
+$app->test();
+
+/*
 namespace Phalcon\App;
 
 $app = new App();
@@ -44,4 +51,4 @@ $app ->setMode(App::DEBUG)
             });
         }
      })
-     ->start();
+     ->start();*/

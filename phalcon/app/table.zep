@@ -29,10 +29,10 @@
 
 namespace Phalcon\App;
 
-use Phalcon\Loader as Phalcon_Loader;
+use Phalcon\Mvc\Model as Phalcon_Model;
 
 /**
- * Application Loader
+ * Application Table
  *
  * @category   Penlook Application
  * @package    App\Config
@@ -42,58 +42,10 @@ use Phalcon\Loader as Phalcon_Loader;
  * @link       http://github.com/penlook
  * @since      Class available since Release 1.0
  */
-class Loader
+class Table extends Phalcon_Model
 {
-
-    /**
-     * Application Loader
-     *
-     * @var Phalcon\Loader
-     */
-	public loader;
-
-    /**
-     * Constructor
-     *
-     */
-    private function __construct()
-	{
-        let this->loader = new Phalcon_Loader();
-	}
-
-    /**
-     * Get additional namespaces
-     *
-     * @return array
-     */
-    public function getNamespaces()
+    public function initialize()
     {
-        var config, namespaces;
-        let config = Config::getInstance()->getConfig();
-
-        let namespaces = [
-        ];
-
-        return namespaces;
+        this->setConnectionService("mysql");
     }
-
-    /**
-     * Register namespace
-     *
-     */
-    public function registerNamespaces()
-    {
-        this->loader->registerNamespaces(this->getNamespaces());
-    }
-
-    /**
-     * Get loader
-     *
-     * @var Phalcon\Loader
-     */
-    public function getLoader()
-    {
-    	return this->loader;
-    }
-
 }

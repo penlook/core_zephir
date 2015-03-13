@@ -115,8 +115,8 @@
     "namespace": "phalcon",
     "name": "phalcon",
     "description": "",
-    "author": "",
-    "version": "0.0.1",
+    "author": "Phalcon Team - Penlook Development Team",
+    "version": "1.2.4",
     "verbose": false,
     "requires": {
         "extensions": []

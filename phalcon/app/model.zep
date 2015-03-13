@@ -29,71 +29,47 @@
 
 namespace Phalcon\App;
 
-use Phalcon\Loader as Phalcon_Loader;
+use Phalcon\App\Service;
+use Phalcon\App\Session;
 
 /**
- * Application Loader
+ *  Model
  *
  * @category   Penlook Application
- * @package    App\Config
+ * @package    App\Model
  * @copyright  Penlook Development Team
  * @license    GNU Affero General Public
  * @version    1.0
  * @link       http://github.com/penlook
  * @since      Class available since Release 1.0
  */
-class Loader
+class Model
 {
-
     /**
-     * Application Loader
+     * session service instance
      *
-     * @var Phalcon\Loader
+     * @var session
      */
-	public loader;
+    public session;
 
-    /**
-     * Constructor
-     *
-     */
-    private function __construct()
-	{
-        let this->loader = new Phalcon_Loader();
-	}
-
-    /**
-     * Get additional namespaces
-     *
-     * @return array
-     */
-    public function getNamespaces()
+    public function __construct()
     {
-        var config, namespaces;
-        let config = Config::getInstance()->getConfig();
-
-        let namespaces = [
-        ];
-
-        return namespaces;
+        let this->session = Service::getSession();
     }
 
-    /**
-     * Register namespace
-     *
-     */
-    public function registerNamespaces()
+    public function session(key, value = null)
     {
-        this->loader->registerNamespaces(this->getNamespaces());
+        if is_null(value) {
+            var res;
+            let res = this->session->get(key);
+            return is_string(res) ? res : false;
+        } else {
+            this->session->set(key, value);
+        }
     }
 
-    /**
-     * Get loader
-     *
-     * @var Phalcon\Loader
-     */
-    public function getLoader()
+    public function integrate()
     {
-    	return this->loader;
-    }
 
+    }
 }

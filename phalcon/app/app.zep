@@ -32,7 +32,8 @@ namespace Phalcon\App;
 use Phalcon\App\Flow;
 use Phalcon\App\Config;
 use Phalcon\App\Service;
-//use Phalcon\Mvc\Application;
+use Phalcon\App\Loader;
+use Phalcon\Mvc\Application;
 
 /**
  * App Configuration
@@ -427,12 +428,12 @@ class App
     {
         Flow::pick("Setup loader and application");
 
-        //this->setLoader(new Loader())
-        //    ->setApplication(new Application(this->service->getService()));
+        this->setLoader(new Loader())
+            ->setApplication(new Application(this->service->getService()));
 
         Flow::pick("Start handle router");
 
-        //let this->html = this->getApplication()->handle()->getContent();
+        let this->html = this->getApplication()->handle()->getContent();
         return this;
     }
 

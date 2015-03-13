@@ -27,48 +27,21 @@
  *     Nam Vo           <namvh@penlook.com>
  */
 
-namespace Phalcon\App;
+namespace Phalcon\App\Model\Table;
 
-use Phalcon\App\Service;
+use Phalcon\App\Table;
 
 /**
- *  Model
+ * Country Table
  *
  * @category   Penlook Application
- * @package    App\Model
+ * @package    App\Table
  * @copyright  Penlook Development Team
  * @license    GNU Affero General Public
  * @version    1.0
  * @link       http://github.com/penlook
  * @since      Class available since Release 1.0
  */
-class Model
+class Country extends Table
 {
-    /**
-     * session service instance
-     *
-     * @var session
-     */
-    public session;
-
-    public function __construct()
-    {
-        let this->session = Service::getSession();
-    }
-
-    public function session(key, value = null)
-    {
-        if is_null(value) {
-            var res;
-            let res = this->session->get(key);
-            return is_string(res) ? res : false;
-        } else {
-            this->session->set(key, value);
-        }
-    }
-
-    public function integrate()
-    {
-
-    }
 }

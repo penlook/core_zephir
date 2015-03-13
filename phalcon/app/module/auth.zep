@@ -27,48 +27,87 @@
  *     Nam Vo           <namvh@penlook.com>
  */
 
-namespace Phalcon\App;
+namespace Phalcon\App\Module;
 
+use Phalcon\App\Model;
+use Phalcon\App\Model\AppModel;
+use Phalcon\App\Model\UserModel;
+use Phalcon\App\Process;
 use Phalcon\App\Service;
 
 /**
- *  Model
+ * Authenticate
  *
  * @category   Penlook Application
- * @package    App\Model
+ * @package    App\Config
  * @copyright  Penlook Development Team
  * @license    GNU Affero General Public
  * @version    1.0
  * @link       http://github.com/penlook
  * @since      Class available since Release 1.0
  */
-class Model
+
+class Auth extends Model
 {
-    /**
-     * session service instance
+	/**
+     * Check login
      *
-     * @var session
+     * @var login
      */
-    public session;
+	public login;
 
-    public function __construct()
-    {
-        let this->session = Service::getSession();
-    }
+	/**
+     *
+     * @var model
+     */
+	public model;
 
-    public function session(key, value = null)
+    /**
+     *
+     * @var AppModel
+     */
+	public app;
+
+	public session;
+
+	public function __construct()
     {
-        if is_null(value) {
-            var res;
-            let res = this->session->get(key);
-            return is_string(res) ? res : false;
-        } else {
-            this->session->set(key, value);
+        var id;
+
+        parent::__construct();
+        let this->login = false;
+        let id = this->getCurrentUser();
+
+        if id && (id > 0) {
+            let this->login = true;
         }
+
+        let this->app = AppModel::getInstance();
     }
 
-    public function integrate()
+    /**
+     * Get ID of current user
+     *
+     * @return int
+     */
+    public function getCurrentUser()
     {
+        return this->session("user_id");
+    }
 
+    /**
+     * Application Logout
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        //let this->login = "ac";
+        //this->app->logoutUser();
+    }
+
+    public function getSecurityToken()
+    {
+        return "abcdef";
     }
 }

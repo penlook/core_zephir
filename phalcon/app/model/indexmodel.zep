@@ -27,12 +27,13 @@
  *     Nam Vo           <namvh@penlook.com>
  */
 
-namespace Phalcon\App;
+namespace Phalcon\App\Model;
 
-use Phalcon\App\Service;
+use Phalcon\App\Model\Table\User;
+use Phalcon\App\Model;
 
 /**
- *  Model
+ * Index Model
  *
  * @category   Penlook Application
  * @package    App\Model
@@ -42,33 +43,43 @@ use Phalcon\App\Service;
  * @link       http://github.com/penlook
  * @since      Class available since Release 1.0
  */
-class Model
+class IndexModel extends Model
 {
     /**
-     * session service instance
+     * IndexModel instance
      *
-     * @var session
+     * @author Tin Nguyen <tinntt@penlook.com>
+     * @var IndexModel
      */
-    public session;
+	private static static_index;
 
-    public function __construct()
+	/**
+     * Get Instance
+     * This is get instance function
+     *
+     * @author Tin Nguyen <tinntt@penlook.com>
+     * @return IndexModel
+     */
+    public static function getInstance()
     {
-        let this->session = Service::getSession();
-    }
-
-    public function session(key, value = null)
-    {
-        if is_null(value) {
-            var res;
-            let res = this->session->get(key);
-            return is_string(res) ? res : false;
-        } else {
-            this->session->set(key, value);
+        if (!self::static_index) {
+            let self::static_index = new IndexModel();
         }
+
+        return self::static_index;
     }
 
-    public function integrate()
+    /**
+     * Get Users
+     * This is get users function
+     *
+     * @author Tin Nguyen <tinntt@penlook.com>
+     * @return Array Object
+     */
+    public function getUsers()
     {
-
+        return User::find([
+            "columns" : "name, email, alias"
+        ])->toArray();
     }
 }

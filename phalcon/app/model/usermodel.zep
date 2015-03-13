@@ -130,7 +130,7 @@ class UserModel extends Model
             "id = '".this->user->nationality."'"
         ]);
 
-        return alias ? nationality->alias : nationality->name;
+        return alias ? nationality->{"alias"} : nationality->{"name"};
     }
 
     /**

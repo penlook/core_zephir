@@ -29,10 +29,10 @@
 
 namespace Phalcon\App\Model;
 
+use Phalcon\App\Model;
 use Phalcon\App\Process;
 use Phalcon\App\Model\Table\User;
 use Phalcon\App\Model\Table\Language;
-use Phalcon\App\Model;
 
 /**
  * App Model
@@ -217,7 +217,12 @@ class AppModel extends Model
             "columns" : "id, name, first_name, last_name"
         ]);
 
-        this->saveUser(user_info->id, user_info->name, user_info->first_name, user_info->last_name);
+        this->saveUser(
+            user_info->{"id"},
+            user_info->{"name"},
+            user_info->{"first_name"},
+            user_info->{"last_name"}
+        );
     }
 
     /**
@@ -228,10 +233,10 @@ class AppModel extends Model
      */
     public function updateUser(var data)
     {
-        var user;
+        /*var user;
 
         let user = User::findFirst(this->session("user_id"));
 
-        user->save(data);
+        user->save(data);*/
     }
 }

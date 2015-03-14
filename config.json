@@ -63,12 +63,12 @@
         "phalcon/driver/hiredis/dict.c",
         "phalcon/driver/hiredis/read.c",
         "phalcon/driver/hiredis/sds.c",
-        "phalcon/mvc/view/engine/volt/parser.c",
-        "phalcon/mvc/view/engine/volt/scanner.c",
-        "phalcon/mvc/url/utils.c",
         "phalcon/mvc/model/orm.c",
         "phalcon/mvc/model/query/scanner.c",
-        "phalcon/mvc/model/query/parser.c"
+        "phalcon/mvc/model/query/parser.c",
+        "phalcon/mvc/view/engine/volt/parser.c",
+        "phalcon/mvc/view/engine/volt/scanner.c",
+        "phalcon/mvc/url/utils.c"
     ],
     "globals": {
         "db.escape_identifiers": {

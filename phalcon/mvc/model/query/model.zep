@@ -509,7 +509,7 @@ class Query implements QueryInterface, InjectionAwareInterface
 						 * Check if static literals have single quotes and escape them
 						 */
 						if memstr(value, "'") {
-							let escapedValue = value; //phalcon_orm_singlequotes(value);
+							let escapedValue = phalcon_orm_singlequotes(value);
 						} else {
 							let escapedValue = value;
 						}

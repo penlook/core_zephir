@@ -108,6 +108,6 @@ class LanguageModel extends Model
      */
     public function getAllLanguages()
     {
-        return Language::find()->toArray();
+        //return Language::find()->toArray();
     }
 }

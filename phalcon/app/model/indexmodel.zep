@@ -78,8 +78,10 @@ class IndexModel extends Model
      */
     public function getUsers()
     {
+        /*
         return User::find([
             "columns" : "name, email, alias"
         ])->toArray();
+        */
     }
 }
